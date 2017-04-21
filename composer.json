@@ -1,0 +1,14 @@
+{
+    "name": "nirmal/random",
+    "description": "Random Number Generator",
+    "type": "library",
+    "license": "GNU",
+    "authors": [
+        {
+            "name": "Nirmal Sharma",
+            "email": "nirmalsharmamca@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
