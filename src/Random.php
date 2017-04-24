@@ -2,7 +2,8 @@
 namespace Nirmal\Random;
 
 class Random {
-	
+	public static $font = '/monofont.ttf';	
+     
 	public static function randomNumber($min=1,$max=20){
 		return rand($min, $max);
 	}
@@ -67,8 +68,7 @@ class Random {
 		);
 	}
 	
-	public static function unicode_shuffle($string, $chars, $format = 'UTF-8')
-	{
+	public static function unicode_shuffle($string, $chars, $format = 'UTF-8'){
 		for($i=0; $i<$chars; $i++)
 			$rands[$i] = rand(0, mb_strlen($string, $format));
 			   
@@ -92,8 +92,7 @@ class Random {
 	   return substr(str_shuffle($letters), 0, $chars);
 	}
 	
-	public static function RandomPass($numchar) 
-	{ 
+	public static function RandomPass($numchar){ 
 		$word = "a,b,c,d,e,f,g,h,i,j,k,l,m,1,2,3,4,5,6,7,8,9,0"; 
 		$array=explode(",",$word); 
 		shuffle($array); 
@@ -106,8 +105,8 @@ class Random {
 		shuffle($tmp);
 		return join("", $tmp);
 	}
-	
-	function generateCode($characters) {
+		   
+	public static function generateCode($characters) {
 		/* list all possible characters, similar looking characters and vowels have been removed */
 		$possible = '23456789bcdfghjkmnpqrstvwxyz';
 		$code = '';
@@ -119,17 +118,16 @@ class Random {
 		return $code;
 	}
 
-	function create($width='120',$height='40',$characters='6') {
-            
-		$code = $this->generateCode($characters);
-                
-                $this->Session->write('security_code',$code);
+	public static function create($width='120',$height='40',$characters='6') {
+		$font = __dir__ . self::$font;
+		$code = self::generateCode($characters);
                 
 		/* font size will be 75% of the image height */
 		$font_size = $height * 0.70;
 		$image = @imagecreate($width, $height) or die('Cannot initialize new GD image stream');
 		/* set the colours */
 		$background_color = imagecolorallocate($image, 214, 214, 214);
+		
 		$text_color = imagecolorallocate($image, 230, 35, 114);
 		$noise_color = imagecolorallocate($image, 255, 255, 255);
 		/* generate random dots in background */
@@ -141,16 +139,18 @@ class Random {
 			imageline($image, mt_rand(0,$width), mt_rand(0,$height), mt_rand(0,$width), mt_rand(0,$height), $noise_color);
 		}
 		/* create textbox and add text */
-		$textbox = imagettfbbox($font_size, 0, $this->font, $code) or die('Error in imagettfbbox function');
+		$textbox = imagettfbbox($font_size, 0, $font, $code) or die('Error in imagettfbbox function');
 		$x = ($width - $textbox[4])/2;
 		$y = ($height - $textbox[5])/2;
 		$y -= 5;
-		imagettftext($image, $font_size, 0, $x, $y, $text_color, $this->font , $code) or die('Error in imagettftext function');
+		imagettftext($image, $font_size, 0, $x, $y, $text_color, $font , $code) or die('Error in imagettftext function');
 		/* output captcha image to browser */
 		header('Content-Type: image/jpeg');
 		imagejpeg($image);
 		imagedestroy($image);		
 	}
+
+	
 	
 }
 ?>

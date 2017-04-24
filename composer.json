@@ -9,11 +9,6 @@
             "email": "nirmalsharmamca@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
-    "autoload": {
-        "psr-0": {
-            "Nirmal\\Random": "src/"
-        }
-    },
+    "minimum-stability": "dev",
     "require": {}
 }
