@@ -150,7 +150,9 @@ class Random {
 		imagedestroy($image);		
 	}
 
-	
+	public function hello(){
+		return "Hello World :)";
+	}
 	
 }
 ?>
